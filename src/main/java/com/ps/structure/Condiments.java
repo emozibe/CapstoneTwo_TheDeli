@@ -1,4 +1,4 @@
-package com.ps.customclasses;
+package com.ps.structure;
 
 public class Condiments extends Topping {
 
@@ -11,6 +11,6 @@ public class Condiments extends Topping {
 
     @Override
     public double getPrice() {
-        return sideSauce ? price + 0.50 : price;
+        return price;
     }
 }

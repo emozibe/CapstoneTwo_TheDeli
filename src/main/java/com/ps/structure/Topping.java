@@ -1,4 +1,4 @@
-package com.ps.customclasses;
+package com.ps.structure;
 
 public abstract class Topping {
 

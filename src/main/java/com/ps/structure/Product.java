@@ -1,4 +1,4 @@
-package com.ps.customclasses;
+package com.ps.structure;
 
 public interface Product {
     double calculatePrice();

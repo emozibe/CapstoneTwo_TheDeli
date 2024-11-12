@@ -1,4 +1,4 @@
-package com.ps.customclasses;
+package com.ps.structure;
 
 import java.util.ArrayList;
 import java.util.List;

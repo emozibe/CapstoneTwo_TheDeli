@@ -1,21 +1,20 @@
-package com.ps.customclasses;
+package com.ps.structure;
 
 import com.ps.enums.BreadType;
 import com.ps.enums.SandwichSize;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sandwich implements Product {
+public abstract class Sandwich implements Product {
 
-    private String name;
-    private SandwichSize sandwichSize;
-    private BreadType breadType;
-    private boolean isToasted;
-    private List<Topping> defaultToppings;
-    private List<Topping> currentToppings;
-    private List<Topping> addedToppings;
-    private List<Topping> removedToppings;
+    protected String name;
+    protected SandwichSize sandwichSize;
+    protected BreadType breadType;
+    protected boolean isToasted;
+    protected List<Topping> defaultToppings;
+    protected List<Topping> currentToppings;
+    protected List<Topping> addedToppings;
+    protected List<Topping> removedToppings;
 
     public Sandwich(String name, SandwichSize sandwichSize, BreadType breadType, boolean isToasted, List<Topping> defaultToppings) {
         this.name = name;
@@ -31,6 +30,8 @@ public class Sandwich implements Product {
     public Sandwich(SandwichSize sandwichSize, BreadType breadType, boolean isToasted) {
         this("Build Your Own", sandwichSize, breadType, isToasted, new ArrayList<>());
     }
+
+    public abstract String getDescription();
 
     public void addTopping(Topping topping) {
         if (!currentToppings.contains(topping)) {
