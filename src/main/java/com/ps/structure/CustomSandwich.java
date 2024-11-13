@@ -2,13 +2,27 @@ package com.ps.structure;
 
 import com.ps.enums.BreadType;
 import com.ps.enums.SandwichSize;
-import java.util.List;
 import java.util.ArrayList;
 
 public class CustomSandwich extends Sandwich {
 
     public CustomSandwich(SandwichSize sandwichSize, BreadType breadType, boolean isToasted) {
         super("Build Your Own", sandwichSize, breadType, isToasted, new ArrayList<>());
+    }
+
+    @Override
+    public double calculatePrice() {
+        double basePrice = switch (sandwichSize) {
+            case SMALL -> 4.99;
+            case MEDIUM -> 6.99;
+            case LARGE -> 8.99;
+        };
+
+        for (Topping topping : currentToppings) {
+            basePrice += topping.getPrice();
+        }
+
+        return basePrice;
     }
 
     @Override

@@ -19,4 +19,9 @@ public class BLT extends Sandwich {
     public String getDescription() {
         return "A classic BLT sandwich with crispy bacon, fresh lettuce, and tomato.";
     }
+
+    @Override
+    public double calculatePrice() {
+        return 0.0;
+    }
 }

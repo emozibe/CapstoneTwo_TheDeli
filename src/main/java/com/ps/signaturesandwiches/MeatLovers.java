@@ -20,4 +20,9 @@ public class MeatLovers extends Sandwich {
     public String getDescription() {
         return "A hearty Meat Lover's sandwich loaded with bacon, ham, roast beef, and Swiss cheese.";
     }
+
+    @Override
+    public double calculatePrice() {
+        return 0.0;
+    }
 }

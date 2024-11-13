@@ -26,7 +26,8 @@ public class Cheese extends Topping {
         } : basePrice;
     }
 
-    public boolean isExtraCheese() {
+    @Override
+    public boolean isExtra() {
         return extraCheese;
     }
 }

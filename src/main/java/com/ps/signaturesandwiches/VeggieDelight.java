@@ -22,4 +22,9 @@ public class VeggieDelight extends Sandwich {
     public String getDescription() {
         return "A fresh Veggie Delight sandwich packed with lettuce, tomato, cucumber, peppers, onion, and cheddar cheese.";
     }
+
+    @Override
+    public double calculatePrice() {
+        return 0.0;
+    }
 }

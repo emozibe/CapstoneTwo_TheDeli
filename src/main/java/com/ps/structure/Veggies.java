@@ -12,4 +12,9 @@ public class Veggies extends Topping {
     public double getPrice() {
         return 0.0;
     }
+
+    @Override
+    public boolean isExtra() {
+        return false;
+    }
 }

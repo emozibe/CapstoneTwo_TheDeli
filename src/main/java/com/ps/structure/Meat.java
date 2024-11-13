@@ -25,7 +25,8 @@ public class Meat extends Topping {
         } : basePrice;
     }
 
-    public boolean isExtraMeat() {
+    @Override
+    public boolean isExtra() {
         return extraMeat;
     }
 }

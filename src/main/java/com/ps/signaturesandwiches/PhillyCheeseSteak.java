@@ -20,4 +20,9 @@ public class PhillyCheeseSteak extends Sandwich {
     public String getDescription() {
         return "A classic Philly Cheese Steak with tender steak, American cheese, fresh peppers, and creamy mayo.";
     }
+
+    @Override
+    public double calculatePrice() {
+        return 0.0;
+    }
 }

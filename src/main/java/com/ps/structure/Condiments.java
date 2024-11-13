@@ -16,11 +16,8 @@ public class Condiments extends Topping {
         return price;
     }
 
-    public boolean isExtraSauce() {
+    @Override
+    public boolean isExtra() {
         return extraSauce;
-    }
-
-    public void setExtraSauce(boolean extraSauce) {
-        this.extraSauce = extraSauce;
     }
 }

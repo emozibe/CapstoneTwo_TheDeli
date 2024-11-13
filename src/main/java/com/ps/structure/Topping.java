@@ -16,6 +16,8 @@ public abstract class Topping {
 
     public abstract double getPrice();
 
+    public abstract boolean isExtra();
+
     public String getName() {
         return name;
     } public void setName(String name) {

@@ -22,4 +22,9 @@ public class ItalianSpecial extends Sandwich {
     public String getDescription() {
         return "An Italian Special sandwich with salami, pepperoni, provolone cheese, fresh lettuce, tomato, and a touch of mayonnaise.";
     }
+
+    @Override
+    public double calculatePrice() {
+        return 0.0;
+    }
 }

@@ -27,126 +27,70 @@ public abstract class Sandwich implements Product {
         this.removedToppings = new ArrayList<>();
     }
 
-    public Sandwich(SandwichSize sandwichSize, BreadType breadType, boolean isToasted) {
-        this("Build Your Own", sandwichSize, breadType, isToasted, new ArrayList<>());
-    }
-
     public abstract String getDescription();
 
     public void addTopping(Topping topping) {
         if (!currentToppings.contains(topping)) {
             currentToppings.add(topping);
-            if (!defaultToppings.contains(topping)) {
-                addedToppings.add(topping);
-            }
-            removedToppings.remove(topping);
+            System.out.println(topping.getName() + " added to your sandwich!");
+        } else {
+            System.out.println("The topping " + topping.getName() + " is already on your sandwich.");
         }
     }
 
     public void removeTopping(Topping topping) {
         if (currentToppings.contains(topping)) {
             currentToppings.remove(topping);
-            if (defaultToppings.contains(topping)) {
+
+            if (defaultToppings.contains(topping) && !removedToppings.contains(topping)) {
                 removedToppings.add(topping);
             }
+
             addedToppings.remove(topping);
-        }
-    }
 
-    public void setCurrentToppings(List<Topping> newToppings) {
-        addedToppings.clear();
-        removedToppings.clear();
-
-        currentToppings = new ArrayList<>(newToppings);
-
-        for (Topping topping : currentToppings) {
-            if (!defaultToppings.contains(topping)) {
-                addedToppings.add(topping);
-            }
-        }
-        for (Topping topping : defaultToppings) {
-            if (!currentToppings.contains(topping)) {
-                removedToppings.add(topping);
-            }
-        }
-    }
-
-    @Override
-    public double calculatePrice() {
-        double basePrice = switch (sandwichSize) {
-            case SMALL -> 4.99;
-            case MEDIUM -> 6.99;
-            case LARGE -> 8.99;
-        };
-
-        for (Topping topping : currentToppings) {
-            basePrice += topping.getPrice();
-        }
-
-        return basePrice;
-    }
-
-    @Override
-    public String toString() {
-        String summary = "Sandwich: " + name
-                + ", Size: " + sandwichSize
-                + ", Bread: " + breadType
-                + ", Toasted: " + (isToasted ? "Yes" : "No")
-                + ", Toppings: ";
-
-        if (currentToppings.isEmpty()) {
-            summary += "No toppings";
+            System.out.println(topping.getName() + " has been removed from your sandwich.");
         } else {
-            String toppings = String.join(", ", currentToppings.stream().map(Topping::getName).toList());
-            summary += toppings;
+            System.out.println("The topping " + topping.getName() + " is not on your sandwich.");
         }
+    }
 
-        if (!addedToppings.isEmpty()) {
-            String additions = String.join(", ", addedToppings.stream().map(Topping::getName).toList());
-            summary += "\nAdded Toppings: " + additions;
-        }
+    private boolean containsTopping(Topping topping) {
+        return currentToppings.stream().anyMatch(t -> t.getName().equals(topping.getName()));
+    }
 
-        if (!removedToppings.isEmpty()) {
-            String removals = String.join(", ", removedToppings.stream().map(Topping::getName).toList());
-            summary += "\nRemoved Toppings: " + removals;
-        }
-
-        return summary;
+    public double getBasePrice() {
+        return switch (this.sandwichSize) {
+            case SMALL -> 5.50;
+            case MEDIUM -> 7.00;
+            case LARGE -> 8.50;
+        };
     }
 
     public SandwichSize getSandwichSize() {
         return sandwichSize;
-    }
-
-    public void setSandwichSize(SandwichSize sandwichSize) {
+    } public void setSandwichSize(SandwichSize sandwichSize) {
         this.sandwichSize = sandwichSize;
     }
 
     public BreadType getBreadType() {
         return breadType;
-    }
-
-    public void setBreadType(BreadType breadType) {
+    } public void setBreadType(BreadType breadType) {
         this.breadType = breadType;
     }
 
-    public boolean getIsToasted() {
-        return isToasted;
-    }
-
-    public void setIsToasted(boolean toasted) {
-        isToasted = toasted;
+    public boolean isToasted() {
+        return this.isToasted;
     }
 
     public List<Topping> getCurrentToppings() {
         return currentToppings;
+    } public void setCurrentToppings(List<Topping> toppings) {
+        currentToppings = new ArrayList<>(toppings);
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
+    } public void setName(String name) {
         this.name = name;
     }
 }
