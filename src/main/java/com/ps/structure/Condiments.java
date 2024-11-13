@@ -6,8 +6,8 @@ public class Condiments extends Topping {
 
     private boolean extraSauce;
 
-    public Condiments(String name, double price, SandwichSize size, boolean extraSauce) {
-        super(name, price, size);
+    public Condiments(String name, SandwichSize size, boolean extraSauce) {
+        super(name, 0.00, size);
         this.extraSauce = extraSauce;
     }
 

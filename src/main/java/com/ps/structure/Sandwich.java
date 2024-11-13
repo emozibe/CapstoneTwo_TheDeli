@@ -53,6 +53,24 @@ public abstract class Sandwich implements Product {
         }
     }
 
+    public void setCurrentToppings(List<Topping> newToppings) {
+        addedToppings.clear();
+        removedToppings.clear();
+
+        currentToppings = new ArrayList<>(newToppings);
+
+        for (Topping topping : currentToppings) {
+            if (!defaultToppings.contains(topping)) {
+                addedToppings.add(topping);
+            }
+        }
+        for (Topping topping : defaultToppings) {
+            if (!currentToppings.contains(topping)) {
+                removedToppings.add(topping);
+            }
+        }
+    }
+
     @Override
     public double calculatePrice() {
         double basePrice = switch (sandwichSize) {

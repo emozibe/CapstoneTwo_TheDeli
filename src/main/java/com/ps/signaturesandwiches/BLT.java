@@ -9,9 +9,9 @@ public class BLT extends Sandwich {
 
     public BLT(SandwichSize sandwichSize, BreadType breadType, boolean isToasted) {
         super("BLT", sandwichSize, breadType, isToasted, List.of(
-                new Meat("Bacon", 1.0, false),
-                new Veggies("Lettuce", 0.0),
-                new Veggies("Tomato", 0.0)
+                new Meat("Bacon", sandwichSize, false),
+                new Veggies("Lettuce", sandwichSize),
+                new Veggies("Tomato", sandwichSize)
         ));
     }
 

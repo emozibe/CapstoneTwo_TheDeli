@@ -25,4 +25,8 @@ public class Cheese extends Topping {
             case LARGE -> 0.90;
         } : basePrice;
     }
+
+    public boolean isExtraCheese() {
+        return extraCheese;
+    }
 }

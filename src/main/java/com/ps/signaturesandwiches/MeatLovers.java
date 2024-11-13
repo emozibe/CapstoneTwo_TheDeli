@@ -9,10 +9,10 @@ public class MeatLovers extends Sandwich {
 
     public MeatLovers(SandwichSize sandwichSize, BreadType breadType, boolean isToasted) {
         super("Meat Lover's", sandwichSize, breadType, isToasted, List.of(
-                new Meat("Bacon", 1.0, false),
-                new Meat("Ham", 1.0, false),
-                new Meat("Roast Beef", 1.0, false),
-                new Cheese("Swiss", 1.0, false)
+                new Meat("Bacon", sandwichSize, false),
+                new Meat("Ham", sandwichSize, false),
+                new Meat("Roast Beef", sandwichSize, false),
+                new Cheese("Swiss", sandwichSize, false)
         ));
     }
 

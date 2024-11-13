@@ -9,12 +9,12 @@ public class VeggieDelight extends Sandwich {
 
     public VeggieDelight(SandwichSize sandwichSize, BreadType breadType, boolean isToasted) {
         super("Veggie Delight", sandwichSize, breadType, isToasted, List.of(
-                new Veggies("Lettuce", 0.0),
-                new Veggies("Tomato", 0.0),
-                new Veggies("Cucumber", 0.0),
-                new Veggies("Peppers", 0.0),
-                new Veggies("Onion", 0.0),
-                new Cheese("Cheddar", 1.0, false)
+                new Veggies("Lettuce", sandwichSize),
+                new Veggies("Tomato", sandwichSize),
+                new Veggies("Cucumber", sandwichSize),
+                new Veggies("Peppers", sandwichSize),
+                new Veggies("Onion", sandwichSize),
+                new Cheese("Cheddar", sandwichSize, false)
         ));
     }
 

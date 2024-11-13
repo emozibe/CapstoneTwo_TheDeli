@@ -9,12 +9,12 @@ public class ItalianSpecial extends Sandwich {
 
     public ItalianSpecial(SandwichSize sandwichSize, BreadType breadType, boolean isToasted) {
         super("Italian Special", sandwichSize, breadType, isToasted, List.of(
-                new Meat("Salami", 1.0, false),
-                new Meat("Ham", 1.0, false),
-                new Cheese("Provolone", 1.0, false),
-                new Veggies("Lettuce", 0.5),
-                new Veggies("Tomato", 0.5),
-                new Condiments("Mayo", 0.0, false)
+                new Meat("Salami", sandwichSize, false),
+                new Meat("Ham", sandwichSize, false),
+                new Cheese("Provolone", sandwichSize, false),
+                new Veggies("Lettuce", sandwichSize),
+                new Veggies("Tomato", sandwichSize),
+                new Condiments("Mayo", sandwichSize, false)
         ));
     }
 

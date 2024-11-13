@@ -24,4 +24,8 @@ public class Meat extends Topping {
             case LARGE -> 1.50;
         } : basePrice;
     }
+
+    public boolean isExtraMeat() {
+        return extraMeat;
+    }
 }
