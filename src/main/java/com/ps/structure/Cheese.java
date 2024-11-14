@@ -42,6 +42,11 @@ public class Cheese extends Topping {
         return new Cheese(this.type, this.size, this.extraCheese);
     }
 
+    @Override
+    public String toString() {
+        return type.toString() + (extraCheese ? " (Extra)" : "");
+    }
+
     public CheeseType getType() {
         return type;
     }

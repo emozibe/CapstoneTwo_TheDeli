@@ -6,11 +6,13 @@ import java.util.List;
 public class Order {
 
     private int orderID;
-    private static int nextOrderID;
+    private static int nextOrderID = 1;
+    private String customerName;
     private List<Product> products;
 
-    public Order() {
+    public Order(String customerName) {
         this.orderID = nextOrderID++;
+        this.customerName = customerName;
         products = new ArrayList<>();
     }
 
@@ -36,6 +38,7 @@ public class Order {
 
     public void printOrderSummary() {
         System.out.println("Order ID: " + orderID);
+        System.out.println("Customer Name: " + customerName);
         for (Product product : products) {
             System.out.println(product);
         }
@@ -44,5 +47,13 @@ public class Order {
 
     public int getOrderID() {
         return orderID;
+    }
+
+    public List<Product> getItems() {
+        return products;
+    }
+
+    public String getCustomerName() {
+        return customerName;
     }
 }

@@ -8,7 +8,7 @@ public class Meat extends Topping {
     private final boolean extraMeat;
 
     public Meat(MeatType type, SandwichSize size, boolean extraMeat) {
-        super(type.name(), size); // Use enum name as display name
+        super(type.name(), size);
         this.type = type;
         this.extraMeat = extraMeat;
     }
@@ -37,6 +37,12 @@ public class Meat extends Topping {
     public Topping clone() {
         return new Meat(this.type, this.size, this.extraMeat);
     }
+
+    @Override
+    public String toString() {
+        return type.toString() + (extraMeat ? " (Extra)" : "");
+    }
+
 
     public MeatType getType() {
         return type;

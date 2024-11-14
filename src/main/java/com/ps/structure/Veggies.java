@@ -26,6 +26,11 @@ public class Veggies extends Topping {
         return new Veggies(this.type, this.size);
     }
 
+    @Override
+    public String toString() {
+        return type.toString();
+    }
+
     public VeggieType getType() {
         return type;
     }

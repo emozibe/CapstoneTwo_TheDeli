@@ -5,12 +5,12 @@ import com.ps.enums.CondimentType;
 
 public class Condiments extends Topping {
     private final CondimentType type;
-    private final boolean extraSauce;
+    private final boolean onSide;
 
-    public Condiments(CondimentType type, SandwichSize size, boolean extraSauce) {
-        super(type.name(), size); // Use enum name as display name
+    public Condiments(CondimentType type, SandwichSize size, boolean onSide) {
+        super(type.toString(), size);
         this.type = type;
-        this.extraSauce = extraSauce;
+        this.onSide = onSide;
     }
 
     @Override
@@ -20,12 +20,17 @@ public class Condiments extends Topping {
 
     @Override
     public boolean isExtra() {
-        return extraSauce;
+        return onSide;
     }
 
     @Override
     public Topping clone() {
-        return new Condiments(this.type, this.size, this.extraSauce);
+        return new Condiments(this.type, this.size, this.onSide);
+    }
+
+    @Override
+    public String toString() {
+        return type.toString() + (onSide ? " (On the Side)" : "");
     }
 
     public CondimentType getType() {

@@ -56,10 +56,6 @@ public abstract class Sandwich implements Product {
         }
     }
 
-    private boolean containsTopping(Topping topping) {
-        return currentToppings.stream().anyMatch(t -> t.getName().equals(topping.getName()));
-    }
-
     public double getBasePrice() {
         return switch (this.sandwichSize) {
             case SMALL -> 5.50;
