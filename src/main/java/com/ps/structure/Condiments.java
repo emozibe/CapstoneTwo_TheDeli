@@ -20,4 +20,9 @@ public class Condiments extends Topping {
     public boolean isExtra() {
         return extraSauce;
     }
+
+    @Override
+    public Topping clone() {
+        return new Condiments(this.name, this.size, this.extraSauce);
+    }
 }

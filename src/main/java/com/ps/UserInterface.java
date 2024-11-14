@@ -267,12 +267,17 @@ public class UserInterface {
 
                 if (choice == 0) return;
                 if (choice >= 1 && choice <= sandwiches.length) {
-                    Sandwich selectedSandwich = sandwiches[choice - 1];
+                    Sandwich selectedSandwich = sandwiches[choice - 1].clone();
 
                     SandwichSize selectedSize = selectSandwichSize();
                     BreadType selectedBread = selectBreadType();
 
-                    selectedSandwich = selectedSandwich.cloneWithSizeAndBread(selectedSize, selectedBread);
+                    selectedSandwich.setSandwichSize(selectedSize);
+                    selectedSandwich.setBreadType(selectedBread);
+
+                    for (Topping topping : selectedSandwich.getCurrentToppings()) {
+                        topping.setSize(selectedSize);
+                    }
 
                     customizeSignatureSandwich(selectedSandwich);
                 } else {
@@ -439,7 +444,6 @@ public class UserInterface {
             System.out.println(" 4) Condiments");
             System.out.println(" 5) View/remove current toppings");
             System.out.println(" 0) Done with toppings");
-            System.out.print("\nPlease enter your choice: ");
 
             try {
                 choice = cmdscnr.nextInt();
@@ -483,7 +487,12 @@ public class UserInterface {
     private void addUniqueToppings(List<Topping> currentToppings, List<Topping> newToppings) {
         for (Topping newTopping : newToppings) {
             boolean alreadyAdded = currentToppings.stream()
-                    .anyMatch(existingTopping -> existingTopping.getName().equalsIgnoreCase(newTopping.getName()));
+                    .anyMatch(existingTopping ->
+                            existingTopping.getName().equalsIgnoreCase(newTopping.getName()) &&
+                                    existingTopping.getClass().equals(newTopping.getClass()) &&
+                                    existingTopping.isExtra() == newTopping.isExtra() &&
+                                    existingTopping.getSize() == newTopping.getSize()
+                    );
 
             if (alreadyAdded) {
                 System.out.println("The topping " + newTopping.getName() + " is already on your sandwich!");
@@ -584,9 +593,8 @@ public class UserInterface {
     }
 
     private List<Topping> selectMeat(SandwichSize size) {
-        List<Topping> meats = new ArrayList<>();
+        List<Topping> selectedMeats = new ArrayList<>();
         int choice;
-        boolean extraMeat;
 
         do {
             System.out.println("\n--- Select Meat ---");
@@ -596,14 +604,15 @@ public class UserInterface {
             System.out.println(" 4) Steak");
             System.out.println(" 5) Roast Beef");
             System.out.println(" 6) Salami");
-            System.out.println(" 0) Done with meat!\n");
-            System.out.print("Please enter your choice: ");
+            System.out.println(" 0) Done with meat!");
+
+            System.out.print("\nPlease enter your choice: ");
 
             try {
                 choice = cmdscnr.nextInt();
                 cmdscnr.nextLine();
 
-                if (choice == 0) return meats;
+                if (choice == 0) return selectedMeats;
 
                 String meatName;
                 switch (choice) {
@@ -619,22 +628,13 @@ public class UserInterface {
                     }
                 }
 
-                // Calculate extra meat cost based on size
-                double extraCost = switch (size) {
-                    case SMALL -> 0.50;
-                    case MEDIUM -> 1.00;
-                    case LARGE -> 1.50;
-                };
-
-                System.out.printf("\nWould you like extra %s for an additional $%.2f? (1 for Yes, 2 for No): ", meatName, extraCost);
-                int extraChoice = cmdscnr.nextInt();
+                System.out.print("Would you like extra meat? (1 for Yes, 2 for No): ");
+                boolean extraMeat = cmdscnr.nextInt() == 1;
                 cmdscnr.nextLine();
-                extraMeat = (extraChoice == 1);
 
-                // Create Meat topping with the selected options
                 Meat meatTopping = new Meat(meatName, size, extraMeat);
-                meats.add(meatTopping);
-                System.out.println(meatName + (extraMeat ? " with extra meat" : "") + " added to your sandwich!");
+
+                addUniqueToppings(selectedMeats, List.of(meatTopping));
 
             } catch (Exception e) {
                 System.out.println("\nOops! That's not a valid choice. Please try again.\n");
@@ -644,9 +644,8 @@ public class UserInterface {
     }
 
     private List<Topping> selectCheese(SandwichSize size) {
-        List<Topping> cheeses = new ArrayList<>();
+        List<Topping> selectedCheeses = new ArrayList<>();
         int choice;
-        boolean extraCheese;
 
         do {
             System.out.println("\n--- Select Cheese ---");
@@ -654,14 +653,15 @@ public class UserInterface {
             System.out.println(" 2) Provolone");
             System.out.println(" 3) Cheddar");
             System.out.println(" 4) Swiss");
-            System.out.println(" 0) Done with cheese!\n");
-            System.out.print("Please enter your choice: ");
+            System.out.println(" 0) Done with cheese!");
+
+            System.out.print("\nPlease enter your choice: ");
 
             try {
                 choice = cmdscnr.nextInt();
                 cmdscnr.nextLine();
 
-                if (choice == 0) return cheeses;
+                if (choice == 0) return selectedCheeses;
 
                 String cheeseName;
                 switch (choice) {
@@ -675,22 +675,13 @@ public class UserInterface {
                     }
                 }
 
-                // Calculate extra cheese cost based on size
-                double extraCost = switch (size) {
-                    case SMALL -> 0.30;
-                    case MEDIUM -> 0.60;
-                    case LARGE -> 0.90;
-                };
-
-                System.out.printf("\nWould you like extra %s for an additional $%.2f? (1 for Yes, 2 for No): ", cheeseName, extraCost);
-                int extraChoice = cmdscnr.nextInt();
+                System.out.print("Would you like extra cheese? (1 for Yes, 2 for No): ");
+                boolean extraCheese = cmdscnr.nextInt() == 1;
                 cmdscnr.nextLine();
-                extraCheese = (extraChoice == 1);
 
-                // Create Cheese topping with the selected options
                 Cheese cheeseTopping = new Cheese(cheeseName, size, extraCheese);
-                cheeses.add(cheeseTopping);
-                System.out.println(cheeseName + (extraCheese ? " with extra cheese" : "") + " added to your sandwich!");
+
+                addUniqueToppings(selectedCheeses, List.of(cheeseTopping));
 
             } catch (Exception e) {
                 System.out.println("\nOops! That's not a valid choice. Please try again.\n");
@@ -715,7 +706,6 @@ public class UserInterface {
             System.out.println(" 8) Guacamole");
             System.out.println(" 9) Mushrooms");
             System.out.println(" 0) Done with veggies!");
-
             System.out.print("\nPlease enter your choice: ");
 
             try {
@@ -788,10 +778,12 @@ public class UserInterface {
                 }
 
                 Condiments condimentTopping = new Condiments(condimentName, size, false);
-                condiments.add(condimentTopping);
+
+                addUniqueToppings(condiments, List.of(condimentTopping));
+
                 System.out.println(condimentName + " added to the sandwich.");
 
-                System.out.print("\nWould you like an extra condiment on the side? (1 for Yes, 2 for No): ");
+                System.out.print("\nWould you like any extra condiment on the side? (1 for Yes, 2 for No): ");
                 int extraChoice = cmdscnr.nextInt();
                 cmdscnr.nextLine();
                 if (extraChoice == 1) {

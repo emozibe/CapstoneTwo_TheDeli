@@ -16,9 +16,17 @@ public abstract class Topping {
 
     public abstract boolean isExtra();
 
+    public abstract Topping clone();
+
     public String getName() {
         return name;
     } public void setName(String name) {
         this.name = name;
+    }
+
+    public SandwichSize getSize() {
+        return size;
+    } public void setSize(SandwichSize size) {
+        this.size = size;
     }
 }

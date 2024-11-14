@@ -48,7 +48,9 @@ public class CustomSandwich extends Sandwich {
     }
 
     @Override
-    public Sandwich cloneWithSizeAndBread(SandwichSize size, BreadType breadType) {
-        return new CustomSandwich(size, breadType, this.isToasted());
+    public CustomSandwich clone() {
+        CustomSandwich clonedSandwich = new CustomSandwich(this.sandwichSize, this.breadType, this.isToasted);
+        clonedSandwich.setCurrentToppings(new ArrayList<>(this.getCurrentToppings()));
+        return clonedSandwich;
     }
 }

@@ -34,4 +34,9 @@ public class Cheese extends Topping {
     public boolean isExtra() {
         return extraCheese;
     }
+
+    @Override
+    public Topping clone() {
+        return new Cheese(this.name, this.size, this.extraCheese);
+    }
 }

@@ -29,4 +29,9 @@ public class Meat extends Topping {
     public boolean isExtra() {
         return extraMeat;
     }
+
+    @Override
+    public Topping clone() {
+        return new Meat(this.name, this.size, this.extraMeat);
+    }
 }

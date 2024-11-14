@@ -17,4 +17,9 @@ public class Veggies extends Topping {
     public boolean isExtra() {
         return false;
     }
+
+    @Override
+    public Topping clone() {
+        return new Veggies(this.name, this.size);
+    }
 }

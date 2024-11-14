@@ -3,6 +3,7 @@ package com.ps.signaturesandwiches;
 import com.ps.enums.BreadType;
 import com.ps.enums.SandwichSize;
 import com.ps.structure.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItalianSpecial extends Sandwich {
@@ -29,7 +30,15 @@ public class ItalianSpecial extends Sandwich {
     }
 
     @Override
-    public Sandwich cloneWithSizeAndBread(SandwichSize size, BreadType breadType) {
-        return new ItalianSpecial(size, breadType, this.isToasted());
+    public Sandwich clone() {
+        ItalianSpecial clonedSandwich = new ItalianSpecial(this.sandwichSize, this.breadType, this.isToasted);
+
+        List<Topping> clonedToppings = new ArrayList<>();
+        for (Topping topping : this.getCurrentToppings()) {
+            clonedToppings.add(topping.clone());
+        }
+
+        clonedSandwich.setCurrentToppings(clonedToppings);
+        return clonedSandwich;
     }
 }
