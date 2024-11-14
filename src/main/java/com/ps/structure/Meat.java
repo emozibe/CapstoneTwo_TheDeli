@@ -1,12 +1,15 @@
 package com.ps.structure;
 
 import com.ps.enums.SandwichSize;
+import com.ps.enums.MeatType;
 
 public class Meat extends Topping {
-    private boolean extraMeat;
+    private final MeatType type;
+    private final boolean extraMeat;
 
-    public Meat(String name, SandwichSize size, boolean extraMeat) {
-        super(name, size);
+    public Meat(MeatType type, SandwichSize size, boolean extraMeat) {
+        super(type.name(), size); // Use enum name as display name
+        this.type = type;
         this.extraMeat = extraMeat;
     }
 
@@ -32,6 +35,10 @@ public class Meat extends Topping {
 
     @Override
     public Topping clone() {
-        return new Meat(this.name, this.size, this.extraMeat);
+        return new Meat(this.type, this.size, this.extraMeat);
+    }
+
+    public MeatType getType() {
+        return type;
     }
 }

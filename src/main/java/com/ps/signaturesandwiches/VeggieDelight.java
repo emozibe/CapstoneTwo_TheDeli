@@ -2,6 +2,7 @@ package com.ps.signaturesandwiches;
 
 import com.ps.enums.BreadType;
 import com.ps.enums.SandwichSize;
+import com.ps.enums.*;
 import com.ps.structure.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +11,12 @@ public class VeggieDelight extends Sandwich {
 
     public VeggieDelight(SandwichSize sandwichSize, BreadType breadType, boolean isToasted) {
         super("Veggie Delight", sandwichSize, breadType, isToasted, List.of(
-                new Veggies("Lettuce", sandwichSize),
-                new Veggies("Tomato", sandwichSize),
-                new Veggies("Cucumber", sandwichSize),
-                new Veggies("Peppers", sandwichSize),
-                new Veggies("Onion", sandwichSize),
-                new Cheese("Cheddar", sandwichSize, false)
+                new Veggies(VeggieType.LETTUCE, sandwichSize),
+                new Veggies(VeggieType.TOMATO, sandwichSize),
+                new Veggies(VeggieType.CUCUMBER, sandwichSize),
+                new Veggies(VeggieType.PEPPERS, sandwichSize),
+                new Veggies(VeggieType.ONION, sandwichSize),
+                new Cheese(CheeseType.CHEDDAR, sandwichSize, false)
         ));
     }
 

@@ -1,11 +1,14 @@
 package com.ps.structure;
 
 import com.ps.enums.SandwichSize;
+import com.ps.enums.VeggieType;
 
 public class Veggies extends Topping {
+    private final VeggieType type;
 
-    public Veggies(String name, SandwichSize size) {
-        super(name, size);
+    public Veggies(VeggieType type, SandwichSize size) {
+        super(type.name(), size); // Use enum name as display name
+        this.type = type;
     }
 
     @Override
@@ -20,6 +23,10 @@ public class Veggies extends Topping {
 
     @Override
     public Topping clone() {
-        return new Veggies(this.name, this.size);
+        return new Veggies(this.type, this.size);
+    }
+
+    public VeggieType getType() {
+        return type;
     }
 }

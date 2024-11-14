@@ -2,6 +2,7 @@ package com.ps.signaturesandwiches;
 
 import com.ps.enums.BreadType;
 import com.ps.enums.SandwichSize;
+import com.ps.enums.*;
 import com.ps.structure.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +11,9 @@ public class BLT extends Sandwich {
 
     public BLT(SandwichSize sandwichSize, BreadType breadType, boolean isToasted) {
         super("BLT", sandwichSize, breadType, isToasted, List.of(
-                new Meat("Bacon", sandwichSize, false),
-                new Veggies("Lettuce", sandwichSize),
-                new Veggies("Tomato", sandwichSize)
+                new Meat(MeatType.BACON, sandwichSize, false),
+                new Veggies(VeggieType.LETTUCE, sandwichSize),
+                new Veggies(VeggieType.TOMATO, sandwichSize)
         ));
     }
 
