@@ -46,4 +46,9 @@ public class CustomSandwich extends Sandwich {
         }
         return description.toString();
     }
+
+    @Override
+    public Sandwich cloneWithSizeAndBread(SandwichSize size, BreadType breadType) {
+        return new CustomSandwich(size, breadType, this.isToasted());
+    }
 }

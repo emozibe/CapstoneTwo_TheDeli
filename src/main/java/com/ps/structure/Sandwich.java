@@ -29,6 +29,8 @@ public abstract class Sandwich implements Product {
 
     public abstract String getDescription();
 
+    public abstract Sandwich cloneWithSizeAndBread(SandwichSize size, BreadType breadType);
+
     public void addTopping(Topping topping) {
         if (!currentToppings.contains(topping)) {
             currentToppings.add(topping);

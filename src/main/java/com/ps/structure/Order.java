@@ -22,6 +22,10 @@ public class Order {
         products.remove(product);
     }
 
+    public void clearOrder() {
+        products.clear();
+    }
+
     public double calculateTotal() {
         double total = 0.0;
         for (Product product : products) {

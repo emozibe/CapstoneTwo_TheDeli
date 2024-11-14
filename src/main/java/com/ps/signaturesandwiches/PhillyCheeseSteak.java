@@ -25,4 +25,9 @@ public class PhillyCheeseSteak extends Sandwich {
     public double calculatePrice() {
         return 0.0;
     }
+
+    @Override
+    public Sandwich cloneWithSizeAndBread(SandwichSize size, BreadType breadType) {
+        return new PhillyCheeseSteak(size, breadType, this.isToasted());
+    }
 }

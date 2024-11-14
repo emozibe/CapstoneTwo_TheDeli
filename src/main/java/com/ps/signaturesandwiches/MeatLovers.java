@@ -25,4 +25,9 @@ public class MeatLovers extends Sandwich {
     public double calculatePrice() {
         return 0.0;
     }
+
+    @Override
+    public Sandwich cloneWithSizeAndBread(SandwichSize size, BreadType breadType) {
+        return new MeatLovers(size, breadType, this.isToasted());
+    }
 }

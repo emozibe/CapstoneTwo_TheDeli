@@ -7,7 +7,7 @@ public class Cheese extends Topping {
     private boolean extraCheese;
 
     public Cheese(String name, SandwichSize size, boolean extraCheese) {
-        super(name, 0.75, size);
+        super(name, size);
         this.extraCheese = extraCheese;
     }
 
@@ -19,11 +19,15 @@ public class Cheese extends Topping {
             case LARGE -> 2.25;
         };
 
-        return extraCheese ? basePrice + switch (size) {
-            case SMALL -> 0.30;
-            case MEDIUM -> 0.60;
-            case LARGE -> 0.90;
-        } : basePrice;
+        if (extraCheese) {
+            basePrice += switch (size) {
+                case SMALL -> 0.30;
+                case MEDIUM -> 0.60;
+                case LARGE -> 0.90;
+            };
+        }
+
+        return basePrice;
     }
 
     @Override

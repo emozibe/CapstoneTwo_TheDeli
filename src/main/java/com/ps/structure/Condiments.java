@@ -7,13 +7,13 @@ public class Condiments extends Topping {
     private boolean extraSauce;
 
     public Condiments(String name, SandwichSize size, boolean extraSauce) {
-        super(name, 0.00, size);
+        super(name, size);
         this.extraSauce = extraSauce;
     }
 
     @Override
     public double getPrice() {
-        return price;
+        return 0.0;
     }
 
     @Override

@@ -6,7 +6,7 @@ public class Meat extends Topping {
     private boolean extraMeat;
 
     public Meat(String name, SandwichSize size, boolean extraMeat) {
-        super(name, 1.00, size);
+        super(name, size);
         this.extraMeat = extraMeat;
     }
 

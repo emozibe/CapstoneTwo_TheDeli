@@ -10,11 +10,8 @@ import java.util.Scanner;
 public class UserInterface {
 
     private static final Scanner cmdscnr = new Scanner(System.in);
-    private static final Scanner inptscnr = new Scanner(System.in);
-    private Order order = new Order();
-    private final List<Sandwich> sandwich = new ArrayList<>();
-    //private List<Drink> drink = new ArrayList<>();
-    //private List<Chips> chip = new ArrayList<>();
+    //private static final Scanner inptscnr = new Scanner(System.in);
+    private final Order order = new Order();
 
     public void mainMenu() {
         int choice;
@@ -69,7 +66,7 @@ public class UserInterface {
                     case 4 -> checkoutOrder();
                     case 0 -> {
                         System.out.println("\nOrder canceled. Returning to Home Screen...");
-                        sandwich.clear();
+                        order.clearOrder();
                         return;
                     }
                     default -> System.out.println("\nOops! That's not a valid choice. Please try again.\n");
@@ -107,8 +104,8 @@ public class UserInterface {
                         order.addItem(customSandwich);
                     }
                     case 0 -> {
-                        System.out.println("\nReturning to Order Menu...\n");
-                        return;  // Exit the loop and return to orderMenu
+                        System.out.println("\nReturning to Order Menu...");
+                        return;
                     }
                     default -> System.out.println("\nOops! That's not a valid choice. Please try again.\n");
                 }
@@ -120,15 +117,135 @@ public class UserInterface {
     }
 
     private void addDrink() {
-        System.out.println("Drink added to your order!");
+        int choice;
+
+        do {
+            System.out.println("\n--- Drink Selection ---");
+            System.out.println("Choose a drink to stay refreshed!");
+            System.out.println(" 1) Coke");
+            System.out.println(" 2) Sprite");
+            System.out.println(" 3) Fanta");
+            System.out.println(" 4) Dr. Pepper");
+            System.out.println(" 5) Lemonade");
+            System.out.println(" 6) Sweet Tea");
+            System.out.println(" 7) Unsweet Tea");
+            System.out.println(" 8) Water - Free");
+            System.out.print("\nPlease enter your choice: ");
+
+            try {
+                choice = cmdscnr.nextInt();
+                cmdscnr.nextLine();
+
+                if (choice < 1 || choice > 8) {
+                    System.out.println("\nOops! That's not a valid choice. Please try again.\n");
+                    continue;
+                }
+
+                DrinkType selectedType = switch (choice) {
+                    case 1 -> DrinkType.COKE;
+                    case 2 -> DrinkType.SPRITE;
+                    case 3 -> DrinkType.FANTA;
+                    case 4 -> DrinkType.DR_PEPPER;
+                    case 5 -> DrinkType.LEMONADE;
+                    case 6 -> DrinkType.SWEET_TEA;
+                    case 7 -> DrinkType.UNSWEET_TEA;
+                    case 8 -> DrinkType.WATER;
+                    default -> null;
+                };
+
+                DrinkSize size = DrinkSize.SMALL;
+                if (selectedType != DrinkType.WATER) {
+                    do {
+                        System.out.println("\nSelect drink size:");
+                        System.out.println(" 1) Small - $2.00");
+                        System.out.println(" 2) Medium - $2.50");
+                        System.out.println(" 3) Large - $3.00");
+                        System.out.print("\nPlease enter your choice: ");
+
+                        int sizeChoice = cmdscnr.nextInt();
+                        cmdscnr.nextLine();
+
+                        switch (sizeChoice) {
+                            case 1 -> size = DrinkSize.SMALL;
+                            case 2 -> size = DrinkSize.MEDIUM;
+                            case 3 -> size = DrinkSize.LARGE;
+                            default -> {
+                                System.out.println("\nOops! That's not a valid size choice. Please try again.\n");
+                                continue;
+                            }
+                        }
+                        break;
+                    } while (true);
+                } else {
+                    System.out.println("\nSelected water - no charge.");
+                }
+
+                Drink drink = new Drink(size, selectedType);
+                order.addItem(drink);
+                System.out.println(drink + " added to your order.");
+
+                System.out.print("\nWould you like to add another drink? (1 for Yes, 2 for No): ");
+                int another = cmdscnr.nextInt();
+                cmdscnr.nextLine();
+                if (another != 1) break;
+
+            } catch (Exception e) {
+                System.out.println("\nOops! That's not a valid choice. Please try again.\n");
+                cmdscnr.next();
+            }
+        } while (true);
     }
 
     private void addChips() {
-        System.out.println("Chips added to your order!");
+        int choice;
+
+        do {
+            System.out.println("\n--- Chips Selection ---");
+            System.out.println("Choose a flavor to add a crunchy side!");
+            System.out.println(" 1) Original");
+            System.out.println(" 2) BBQ");
+            System.out.println(" 3) Sour Cream");
+            System.out.println(" 4) Cheese");
+            System.out.println(" 5) Salt and Vinegar");
+            System.out.print("\nPlease enter your choice: ");
+
+            try {
+                choice = cmdscnr.nextInt();
+                cmdscnr.nextLine();
+
+                if (choice < 1 || choice > 5) {
+                    System.out.println("\nOops! That's not a valid choice. Please try again.\n");
+                    continue;
+                }
+
+                ChipFlavor selectedFlavor = switch (choice) {
+                    case 1 -> ChipFlavor.ORIGINAL;
+                    case 2 -> ChipFlavor.BBQ;
+                    case 3 -> ChipFlavor.SOUR_CREAM;
+                    case 4 -> ChipFlavor.CHEESE;
+                    case 5 -> ChipFlavor.SALT_AND_VINEGAR;
+                    default -> null;
+                };
+
+                Chips chips = new Chips(selectedFlavor);
+                order.addItem(chips);
+                System.out.println(chips + " added to your order.");
+
+                System.out.print("\nWould you like to add another bag of chips? (1 for Yes, 2 for No): ");
+                int another = cmdscnr.nextInt();
+                cmdscnr.nextLine();
+                if (another != 1) break;
+
+            } catch (Exception e) {
+                System.out.println("\nOops! That's not a valid choice. Please try again.\n");
+                cmdscnr.next();
+            }
+        } while (true);
     }
 
     private void displaySignatureSandwiches() {
         int choice;
+
         Sandwich[] sandwiches = {
                 new BLT(SandwichSize.MEDIUM, BreadType.WHITE, true),
                 new PhillyCheeseSteak(SandwichSize.MEDIUM, BreadType.WHITE, true),
@@ -151,6 +268,12 @@ public class UserInterface {
                 if (choice == 0) return;
                 if (choice >= 1 && choice <= sandwiches.length) {
                     Sandwich selectedSandwich = sandwiches[choice - 1];
+
+                    SandwichSize selectedSize = selectSandwichSize();
+                    BreadType selectedBread = selectBreadType();
+
+                    selectedSandwich = selectedSandwich.cloneWithSizeAndBread(selectedSize, selectedBread);
+
                     customizeSignatureSandwich(selectedSandwich);
                 } else {
                     System.out.println("\nOops! That's not a valid choice. Please try again.\n");
@@ -163,11 +286,6 @@ public class UserInterface {
     }
 
     private void customizeSignatureSandwich(Sandwich selectedSandwich) {
-        BreadType breadType = selectBreadType();
-        SandwichSize sandwichSize = selectSandwichSize();
-        selectedSandwich.setBreadType(breadType);
-        selectedSandwich.setSandwichSize(sandwichSize);
-
         System.out.println("\nHere are the default toppings for your " + selectedSandwich.getName() + ":");
         viewCurrentToppings(selectedSandwich, false);
         System.out.print("Would you like to customize the toppings? (1 for Yes, 2 for No): ");
@@ -185,11 +303,11 @@ public class UserInterface {
         System.out.println("\n--- Build Your Own Sandwich ---");
         System.out.println("Let's start with the basics!");
 
-        // Select Bread Type
-        BreadType breadType = selectBreadType();
-
         // Select Sandwich Size
         SandwichSize sandwichSize = selectSandwichSize();
+
+        // Select Bread Type
+        BreadType breadType = selectBreadType();
 
         // Toasted Option
         boolean toasted = askIfToasted();
@@ -329,19 +447,23 @@ public class UserInterface {
 
                 switch (choice) {
                     case 1 -> {
-                        addUniqueToppings(toppings, selectMeat(sandwich.getSandwichSize()));
+                        List<Topping> meats = selectMeat(sandwich.getSandwichSize());
+                        addUniqueToppings(toppings, meats);
                         viewCurrentToppings(sandwich, false);
                     }
                     case 2 -> {
-                        addUniqueToppings(toppings, selectCheese(sandwich.getSandwichSize()));
+                        List<Topping> cheeses = selectCheese(sandwich.getSandwichSize());
+                        addUniqueToppings(toppings, cheeses);
                         viewCurrentToppings(sandwich, false);
                     }
                     case 3 -> {
-                        addUniqueToppings(toppings, selectVeggies(sandwich.getSandwichSize()));
+                        List<Topping> veggies = selectVeggies(sandwich.getSandwichSize());
+                        addUniqueToppings(toppings, veggies);
                         viewCurrentToppings(sandwich, false);
                     }
                     case 4 -> {
-                        addUniqueToppings(toppings, selectCondiments(sandwich.getSandwichSize()));
+                        List<Topping> condiments = selectCondiments(sandwich.getSandwichSize());
+                        addUniqueToppings(toppings, condiments);
                         viewCurrentToppings(sandwich, false);
                     }
                     case 5 -> viewCurrentToppings(sandwich, true);
@@ -359,12 +481,15 @@ public class UserInterface {
     }
 
     private void addUniqueToppings(List<Topping> currentToppings, List<Topping> newToppings) {
-        for (Topping topping : newToppings) {
-            if (currentToppings.contains(topping)) {
-                System.out.println("The topping " + topping.getName() + " is already on your sandwich!");
+        for (Topping newTopping : newToppings) {
+            boolean alreadyAdded = currentToppings.stream()
+                    .anyMatch(existingTopping -> existingTopping.getName().equalsIgnoreCase(newTopping.getName()));
+
+            if (alreadyAdded) {
+                System.out.println("The topping " + newTopping.getName() + " is already on your sandwich!");
             } else {
-                currentToppings.add(topping);
-                System.out.println(topping.getName() + " added to your sandwich!");
+                currentToppings.add(newTopping);
+                System.out.println(newTopping.getName() + " added to your sandwich!");
             }
         }
     }
@@ -395,6 +520,7 @@ public class UserInterface {
                     case 1 -> {
                         System.out.println("\n--- Add Toppings ---");
                         List<Topping> newToppings = selectToppings(sandwich);
+                        System.out.println();
                         for (Topping topping : newToppings) {
                             sandwich.addTopping(topping);
                             System.out.println(topping.getName() + " added!");
@@ -574,7 +700,7 @@ public class UserInterface {
     }
 
     private List<Topping> selectVeggies(SandwichSize size) {
-        List<Topping> veggies = new ArrayList<>();
+        List<Topping> selectedVeggies = new ArrayList<>();
         int choice;
 
         do {
@@ -588,14 +714,15 @@ public class UserInterface {
             System.out.println(" 7) Pickles");
             System.out.println(" 8) Guacamole");
             System.out.println(" 9) Mushrooms");
-            System.out.println(" 0) Done with veggies!\n");
-            System.out.print("Please enter your choice: ");
+            System.out.println(" 0) Done with veggies!");
+
+            System.out.print("\nPlease enter your choice: ");
 
             try {
                 choice = cmdscnr.nextInt();
                 cmdscnr.nextLine();
 
-                if (choice == 0) return veggies;
+                if (choice == 0) return selectedVeggies;
 
                 String veggieName;
                 switch (choice) {
@@ -615,8 +742,8 @@ public class UserInterface {
                 }
 
                 Veggies veggieTopping = new Veggies(veggieName, size);
-                veggies.add(veggieTopping);
-                System.out.println(veggieName + " added.");
+
+                addUniqueToppings(selectedVeggies, List.of(veggieTopping));
 
             } catch (Exception e) {
                 System.out.println("\nOops! That's not a valid choice. Please try again.\n");
@@ -746,9 +873,12 @@ public class UserInterface {
         double totalPrice = sandwich.getBasePrice();
 
         for (Topping topping : toppings) {
-            double price = topping.getPrice();
-            totalPrice += price;
-            System.out.printf(" - %s%s: $%.2f\n", topping.getName(), (topping.isExtra() ? " (Extra)" : ""), price);
+            double toppingPrice = topping.getPrice();
+            totalPrice += toppingPrice;
+            System.out.printf(" - %s%s: $%.2f\n",
+                    topping.getName(),
+                    (topping.isExtra() ? " (Extra)" : ""),
+                    toppingPrice);
         }
 
         System.out.printf("\nTotal Sandwich Price: $%.2f\n", totalPrice);
