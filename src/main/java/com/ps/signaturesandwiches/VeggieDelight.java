@@ -1,7 +1,5 @@
 package com.ps.signaturesandwiches;
 
-import com.ps.enums.BreadType;
-import com.ps.enums.SandwichSize;
 import com.ps.enums.*;
 import com.ps.structure.*;
 import java.util.ArrayList;
@@ -16,13 +14,14 @@ public class VeggieDelight extends Sandwich {
                 new Veggies(VeggieType.CUCUMBER, sandwichSize),
                 new Veggies(VeggieType.PEPPERS, sandwichSize),
                 new Veggies(VeggieType.ONION, sandwichSize),
-                new Cheese(CheeseType.CHEDDAR, sandwichSize, false)
+                new Cheese(CheeseType.CHEDDAR, sandwichSize, false),
+                new Condiments(CondimentType.VINAIGRETTE, sandwichSize)
         ));
     }
 
     @Override
     public String getDescription() {
-        return "A fresh Veggie Delight sandwich packed with lettuce, tomato, cucumber, peppers, onion, and cheddar cheese.";
+        return "A fresh Veggie Delight sandwich packed with lettuce, tomato, cucumber, peppers, onion, cheddar cheese, and vinaigrette.";
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.ps.structure;
 
-import com.ps.enums.SandwichSize;
-import com.ps.enums.MeatType;
+import com.ps.enums.*;
 
 public class Meat extends Topping {
     private final MeatType type;

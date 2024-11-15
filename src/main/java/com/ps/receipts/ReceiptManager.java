@@ -15,7 +15,6 @@ public class ReceiptManager {
         String fileName = RECEIPT_DIR + "receipt_" + timestamp + ".txt";
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
-
             // Order Header
             bw.write("Order ID: " + order.getOrderID());
             bw.newLine();
@@ -28,8 +27,7 @@ public class ReceiptManager {
             bw.write("Sandwiches:");
             bw.newLine();
             for (Product product : order.getItems()) {
-                if (product instanceof Sandwich) {
-                    Sandwich sandwich = (Sandwich) product;
+                if (product instanceof Sandwich sandwich) {
                     bw.write("- " + (sandwich.isCustom() ? "Build-Your-Own" : sandwich.getName()));
                     bw.newLine();
                     bw.write("  Size: " + sandwich.getSandwichSize());
@@ -41,11 +39,7 @@ public class ReceiptManager {
                     bw.write("  Toppings:");
                     bw.newLine();
                     for (Topping topping : sandwich.getCurrentToppings()) {
-                        String toppingDetail = String.format("    - %s%s%s",
-                                topping.getName(),
-                                (topping.isSideCondiment() ? " (On the Side)" : ""),
-                                topping.getPrice() > 0 ? String.format(": $%.2f", topping.getPrice()) : " (Free)");
-                        bw.write(toppingDetail);
+                        bw.write("    - " + topping.toString());
                         bw.newLine();
                     }
                     bw.write("  Sandwich Total: $" + sandwich.calculatePrice());
@@ -58,12 +52,8 @@ public class ReceiptManager {
             bw.write("Drinks:");
             bw.newLine();
             for (Product product : order.getItems()) {
-                if (product instanceof Drink) {
-                    Drink drink = (Drink) product;
-                    bw.write(String.format("- %s (%s): $%.2f",
-                            drink.getType(),
-                            drink.getSize(),
-                            drink.calculatePrice()));
+                if (product instanceof Drink drink) {
+                    bw.write(String.format("- %s (%s): $%.2f", drink.getType(), drink.getSize(), drink.calculatePrice()));
                     bw.newLine();
                 }
             }
@@ -73,11 +63,8 @@ public class ReceiptManager {
             bw.write("Chips:");
             bw.newLine();
             for (Product product : order.getItems()) {
-                if (product instanceof Chips) {
-                    Chips chips = (Chips) product;
-                    bw.write(String.format("- %s: $%.2f",
-                            chips.getFlavor(),
-                            chips.calculatePrice()));
+                if (product instanceof Chips chips) {
+                    bw.write(String.format("- %s: $%.2f", chips.getFlavor(), chips.calculatePrice()));
                     bw.newLine();
                 }
             }

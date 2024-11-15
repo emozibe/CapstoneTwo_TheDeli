@@ -1,0 +1,20 @@
+Order ID: 1
+Customer Name: Talal
+=================================
+Sandwiches:
+- BLT
+  Size: Small
+  Bread: White
+  Toasted: Yes
+  Toppings:
+    - Bacon
+    - Lettuce
+    - Tomato
+    - Mayo
+  Sandwich Total: $8.5
+
+Drinks:
+
+Chips:
+=================================
+Order Total: $8.50

@@ -1,7 +1,5 @@
 package com.ps.signaturesandwiches;
 
-import com.ps.enums.BreadType;
-import com.ps.enums.SandwichSize;
 import com.ps.enums.*;
 import com.ps.structure.*;
 import java.util.ArrayList;
@@ -14,13 +12,14 @@ public class MeatLovers extends Sandwich {
                 new Meat(MeatType.BACON, sandwichSize, false),
                 new Meat(MeatType.HAM, sandwichSize, false),
                 new Meat(MeatType.ROAST_BEEF, sandwichSize, false),
+                new Meat(MeatType.SALAMI, sandwichSize, false),
                 new Cheese(CheeseType.SWISS, sandwichSize, false)
         ));
     }
 
     @Override
     public String getDescription() {
-        return "A hearty Meat Lover's sandwich loaded with bacon, ham, roast beef, and Swiss cheese.";
+        return "A hearty Meat Lover's sandwich loaded with bacon, ham, roast beef, salami, and Swiss cheese.";
     }
 
     @Override

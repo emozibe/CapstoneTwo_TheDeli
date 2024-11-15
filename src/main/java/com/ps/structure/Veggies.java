@@ -1,13 +1,12 @@
 package com.ps.structure;
 
-import com.ps.enums.SandwichSize;
-import com.ps.enums.VeggieType;
+import com.ps.enums.*;
 
 public class Veggies extends Topping {
     private final VeggieType type;
 
     public Veggies(VeggieType type, SandwichSize size) {
-        super(type.name(), size); // Use enum name as display name
+        super(type.name(), size);
         this.type = type;
     }
 

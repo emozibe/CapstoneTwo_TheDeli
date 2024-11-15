@@ -1,7 +1,6 @@
 package com.ps.structure;
 
-import com.ps.enums.BreadType;
-import com.ps.enums.SandwichSize;
+import com.ps.enums.*;
 import java.util.ArrayList;
 
 public class CustomSandwich extends Sandwich {

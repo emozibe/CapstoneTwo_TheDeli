@@ -47,26 +47,30 @@ public abstract class Sandwich implements Product {
     }
 
     public void addTopping(Topping topping) {
-        if (!currentToppings.contains(topping)) {
+        if (!currentToppings.contains(topping) && !addedToppings.contains(topping)) {
             currentToppings.add(topping);
-            System.out.println(topping.getName() + " added to your sandwich!");
+            addedToppings.add(topping);
+            removedToppings.remove(topping);
+
+            if (!(topping instanceof Condiments) || !topping.isSideCondiment()) {
+                System.out.println("\n" + topping.getName() + " added to your sandwich!");
+            }
         } else {
-            System.out.println("The topping " + topping.getName() + " is already on your sandwich.");
+            if (!(topping instanceof Condiments) || !topping.isSideCondiment()) {
+                System.out.println("\nThe topping " + topping.getName() + " is already on your sandwich!");
+            }
         }
     }
 
     public void removeTopping(Topping topping) {
         if (currentToppings.contains(topping)) {
             currentToppings.remove(topping);
-
-            if (defaultToppings.contains(topping) && !removedToppings.contains(topping)) {
-                removedToppings.add(topping);
-            }
-
+            removedToppings.add(topping);
             addedToppings.remove(topping);
 
+            System.out.println("\n" + topping + " removed from your sandwich!");
         } else {
-            System.out.println("The topping " + topping.getName() + " is not on your sandwich!");
+            System.out.println("\nThe topping " + topping.getName() + " is not on your sandwich!");
         }
     }
 

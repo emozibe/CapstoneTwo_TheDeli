@@ -1,7 +1,5 @@
 package com.ps.signaturesandwiches;
 
-import com.ps.enums.BreadType;
-import com.ps.enums.SandwichSize;
 import com.ps.enums.*;
 import com.ps.structure.*;
 import java.util.ArrayList;
@@ -16,13 +14,13 @@ public class ItalianSpecial extends Sandwich {
                 new Cheese(CheeseType.PROVOLONE, sandwichSize, false),
                 new Veggies(VeggieType.LETTUCE, sandwichSize),
                 new Veggies(VeggieType.TOMATO, sandwichSize),
-                new Condiments(CondimentType.MAYO, sandwichSize, false)
+                new Condiments(CondimentType.VINAIGRETTE, sandwichSize)
         ));
     }
 
     @Override
     public String getDescription() {
-        return "An Italian Special sandwich with salami, ham, provolone cheese, fresh lettuce, tomato, and a touch of mayonnaise.";
+        return "An Italian Special sandwich with salami, ham, provolone cheese, fresh lettuce, tomato, and vinaigrette.";
     }
 
     @Override

@@ -42,7 +42,7 @@ public class Order {
         for (Product product : products) {
             System.out.println(product);
         }
-        System.out.println("Total : $" + calculateTotal());
+        System.out.printf("Total: $%.2f%n", calculateTotal());
     }
 
     public int getOrderID() {

@@ -1,14 +1,13 @@
 package com.ps.structure;
 
-import com.ps.enums.SandwichSize;
-import com.ps.enums.CheeseType;
+import com.ps.enums.*;
 
 public class Cheese extends Topping {
     private final CheeseType type;
     private final boolean extraCheese;
 
     public Cheese(CheeseType type, SandwichSize size, boolean extraCheese) {
-        super(type.name(), size); // Use enum name as display name
+        super(type.name(), size);
         this.type = type;
         this.extraCheese = extraCheese;
     }

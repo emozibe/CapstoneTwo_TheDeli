@@ -1,7 +1,5 @@
 package com.ps.signaturesandwiches;
 
-import com.ps.enums.BreadType;
-import com.ps.enums.SandwichSize;
 import com.ps.enums.*;
 import com.ps.structure.*;
 import java.util.ArrayList;
@@ -13,13 +11,14 @@ public class BLT extends Sandwich {
         super("BLT", sandwichSize, breadType, isToasted, List.of(
                 new Meat(MeatType.BACON, sandwichSize, false),
                 new Veggies(VeggieType.LETTUCE, sandwichSize),
-                new Veggies(VeggieType.TOMATO, sandwichSize)
+                new Veggies(VeggieType.TOMATO, sandwichSize),
+                new Condiments(CondimentType.MAYO, sandwichSize)
         ));
     }
 
     @Override
     public String getDescription() {
-        return "A classic BLT sandwich with crispy bacon, fresh lettuce, and tomato.";
+        return "A classic BLT sandwich with crispy bacon, fresh lettuce, tomato, and a touch of mayo.";
     }
 
     @Override
@@ -33,5 +32,18 @@ public class BLT extends Sandwich {
 
         clonedSandwich.setCurrentToppings(clonedToppings);
         return clonedSandwich;
+    }
+
+    @Override
+    public List<Topping> getCurrentToppings() {
+        List<Topping> allToppings = new ArrayList<>(defaultToppings);
+
+        for (Topping topping : addedToppings) {
+            if (!allToppings.contains(topping)) {
+                allToppings.add(topping);
+            }
+        }
+        allToppings.removeAll(removedToppings);
+        return allToppings;
     }
 }

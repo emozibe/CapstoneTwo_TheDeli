@@ -1,7 +1,5 @@
 package com.ps.signaturesandwiches;
 
-import com.ps.enums.BreadType;
-import com.ps.enums.SandwichSize;
 import com.ps.enums.*;
 import com.ps.structure.*;
 import java.util.ArrayList;
@@ -14,13 +12,14 @@ public class PhillyCheeseSteak extends Sandwich {
                 new Meat(MeatType.STEAK, sandwichSize, false),
                 new Cheese(CheeseType.AMERICAN, sandwichSize, true),
                 new Veggies(VeggieType.PEPPERS, sandwichSize),
-                new Condiments(CondimentType.MAYO, sandwichSize, false)
+                new Veggies(VeggieType.ONION, sandwichSize),
+                new Condiments(CondimentType.MAYO, sandwichSize)
         ));
     }
 
     @Override
     public String getDescription() {
-        return "A classic Philly Cheese Steak with tender steak, American cheese, fresh peppers, and creamy mayo.";
+        return "A classic Philly Cheese Steak with tender steak, American cheese, fresh peppers, onions, and creamy mayo.";
     }
 
     @Override
