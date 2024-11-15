@@ -32,7 +32,6 @@ The Deli Ordering System is a user-focused application that aims to enhance the 
 - **Signature Sandwich Selection**: Choose from a list of signature sandwiches, each with its own default toppings.
 - **Custom Sandwich Creation**: Build your own sandwich by selecting bread type, size, toast preference, and toppings.
 - **Topping Customization for Signature and Custom Sandwiches**: Modify the preset toppings on signature sandwiches or add and remove ingredients freely when building a custom sandwich, ensuring every order meets the user's preferences.
-- **Toppings Customization**: Add or remove toppings from your sandwich, with categories like Meat, Cheese, Veggies, and Condiments.
 - **Side and Drink Options**: Add chips and a variety of drink options.
 - **Checkout and Receipt**: View your order summary and save a receipt for future reference.
 
