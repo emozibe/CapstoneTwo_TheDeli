@@ -1,9 +1,11 @@
 package com.ps;
 
-import com.ps.structure.*;
+import com.ps.orders.*;
 import com.ps.enums.*;
-import com.ps.signaturesandwiches.*;
-import com.ps.receipts.ReceiptManager;
+import com.ps.products.*;
+import com.ps.products.signatures.*;
+import com.ps.toppings.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,6 +16,7 @@ public class UserInterface {
     private static final Scanner inptscnr = new Scanner(System.in);
     private Order order;
 
+    // Main flow
     public void mainMenu() {
         int choice;
 
@@ -94,9 +97,9 @@ public class UserInterface {
         } while (!orderComplete);
     }
 
+    // Order management
     private void checkoutOrder() {
         System.out.println("\n--- Checkout ---");
-        System.out.println("Order Summary for " + order.getCustomerName() + ":");
         order.printOrderSummary();
 
         System.out.print("\nProceed to checkout and save receipt? (1 for Yes, 0 for No): ");
@@ -113,6 +116,46 @@ public class UserInterface {
         }
     }
 
+    private void viewAndRemoveItem() {
+        if (order.getItems().isEmpty()) {
+            System.out.println("\nYour order is currently empty.");
+            return;
+        }
+
+        System.out.println("\n--- Current Order Items ---");
+        List<Product> items = order.getItems();
+        for (int i = 0; i < items.size(); i++) {
+            Product product = items.get(i);
+            System.out.print(" " + (i + 1) + ") ");
+
+            if (product instanceof Sandwich sandwich) {
+                System.out.println(sandwich.getName() + " Sandwich");
+                System.out.println("    Size: " + sandwich.getSandwichSize());
+                System.out.println("    Bread: " + sandwich.getBreadType());
+                System.out.println("    Toasted: " + (sandwich.isToasted() ? "Yes" : "No"));
+                System.out.println("    Toppings:");
+                for (Topping topping : sandwich.getCurrentToppings()) {
+                    System.out.println("      - " + topping);
+                }
+                System.out.printf("    Sandwich Total: $%.2f%n", sandwich.calculatePrice());
+            } else if (product instanceof Drink drink) {
+                System.out.printf("- %s (%s): $%.2f%n", drink.getType(), drink.getSize(), drink.calculatePrice());
+            } else if (product instanceof Chips chips) {
+                System.out.printf("- %s: $%.2f%n", chips.getFlavor(), chips.calculatePrice());
+            }
+        }
+
+        System.out.print("\nEnter the item number to remove, or 0 to go back: ");
+        int choice = cmdscnr.nextInt();
+        cmdscnr.nextLine();
+        if (choice > 0 && choice <= items.size()) {
+            Product removedItem = items.get(choice - 1);
+            order.removeItem(removedItem);
+            System.out.println(removedItem + " has been removed from your order!");
+        }
+    }
+
+    // Product menus
     private void addSandwich() {
         int choice;
 
@@ -279,45 +322,7 @@ public class UserInterface {
         } while (true);
     }
 
-    private void viewAndRemoveItem() {
-        if (order.getItems().isEmpty()) {
-            System.out.println("\nYour order is currently empty.");
-            return;
-        }
-
-        System.out.println("\n--- Current Order Items ---");
-        List<Product> items = order.getItems();
-        for (int i = 0; i < items.size(); i++) {
-            Product product = items.get(i);
-            System.out.print(" " + (i + 1) + ") ");
-
-            if (product instanceof Sandwich sandwich) {
-                System.out.println(sandwich.getName() + " Sandwich");
-                System.out.println("    Size: " + sandwich.getSandwichSize());
-                System.out.println("    Bread: " + sandwich.getBreadType());
-                System.out.println("    Toasted: " + (sandwich.isToasted() ? "Yes" : "No"));
-                System.out.println("    Toppings:");
-                for (Topping topping : sandwich.getCurrentToppings()) {
-                    System.out.println("      - " + topping);
-                }
-                System.out.printf("    Sandwich Total: $%.2f%n", sandwich.calculatePrice());
-            } else if (product instanceof Drink drink) {
-                System.out.printf("- %s (%s): $%.2f%n", drink.getType(), drink.getSize(), drink.calculatePrice());
-            } else if (product instanceof Chips chips) {
-                System.out.printf("- %s: $%.2f%n", chips.getFlavor(), chips.calculatePrice());
-            }
-        }
-
-        System.out.print("\nEnter the item number to remove, or 0 to go back: ");
-        int choice = cmdscnr.nextInt();
-        cmdscnr.nextLine();
-        if (choice > 0 && choice <= items.size()) {
-            Product removedItem = items.get(choice - 1);
-            order.removeItem(removedItem);
-            System.out.println(removedItem + " has been removed from your order!");
-        }
-    }
-
+    // Sandwich creation
     private void displaySignatureSandwiches() {
         int choice;
 
@@ -355,12 +360,13 @@ public class UserInterface {
                     }
 
                     customizeSignatureSandwich(selectedSandwich);
+                    return;
                 } else {
-                    System.out.println("\nOops! That's not a valid choice. Please try again.\n");
+                    System.out.println("\nOops! That's not a valid choice. Please try again.");
                 }
             } catch (Exception e) {
-                System.out.println("\nOops! That's not a valid choice. Please try again.\n");
-                cmdscnr.next();
+                System.out.println("\nOops! That's not a valid choice. Please try again.");
+                cmdscnr.next(); // Clear invalid input
             }
         } while (true);
     }
@@ -379,13 +385,6 @@ public class UserInterface {
 
         order.addItem(selectedSandwich);
         System.out.println("\nYour customized " + selectedSandwich.getName() + " has been added to your order!");
-
-        System.out.print("\nWould you like to add another sandwich? (1 for Yes, 0 for No): ");
-        int another = cmdscnr.nextInt();
-        cmdscnr.nextLine();
-        if (another == 1) {
-            addSandwich();
-        }
     }
 
     private Sandwich buildYourOwnSandwich() {
@@ -408,7 +407,7 @@ public class UserInterface {
         return customSandwich;
     }
 
-    private List<Topping> selectToppings(Sandwich sandwich) {
+    private void selectToppings(Sandwich sandwich) {
         int choice;
 
         do {
@@ -446,7 +445,7 @@ public class UserInterface {
                     case 5 -> viewCurrentToppings(sandwich, true);
                     case 0 -> {
                         System.out.println("\nAll toppings selected. Moving to the next step!");
-                        return sandwich.getCurrentToppings();
+                        return;
                     }
                     default -> System.out.println("\nOops! That's not a valid choice. Please try again.\n");
                 }
@@ -455,6 +454,118 @@ public class UserInterface {
                 cmdscnr.next();
             }
         } while (true);
+    }
+
+    // Toppings customization
+    private void modifyToppings(Sandwich sandwich) {
+        int choice;
+
+        System.out.println("\n--- Modify Toppings ---");
+        System.out.println("Let's customize the toppings on your " + sandwich.getName() + "!");
+
+        do {
+            viewCurrentToppings(sandwich, false);
+
+            System.out.println("\nWhat would you like to do?");
+            System.out.println(" 1) Add Toppings");
+            System.out.println(" 2) Remove Toppings");
+            System.out.println(" 0) Done with customization");
+            System.out.print("\nEnter your choice: ");
+
+            try {
+                choice = cmdscnr.nextInt();
+                cmdscnr.nextLine();
+
+                switch (choice) {
+                    case 1 -> {
+                        System.out.println("\n--- Add Toppings ---");
+                        selectToppings(sandwich);
+                    }
+                    case 2 -> {
+                        System.out.println("\n--- Remove Toppings ---");
+                        removeToppings(sandwich);
+                    }
+                    case 0 -> {
+                        System.out.println("\nAll set! Finished customizing your toppings.");
+                        return;
+                    }
+                    default -> System.out.println("\nOops! That's not a valid choice. Please try again.");
+                }
+            } catch (Exception e) {
+                System.out.println("\nOops! That's not a valid choice. Please try again.");
+                cmdscnr.next();
+            }
+        } while (true);
+    }
+
+    private void removeToppings(Sandwich sandwich) {
+        int choice;
+
+        do {
+            List<Topping> currentToppings = sandwich.getCurrentToppings();
+            if (currentToppings.isEmpty()) {
+                System.out.println("\nYour sandwich currently has no toppings to remove.");
+                return;
+            }
+
+            System.out.println("\n--- Current Toppings ---");
+            System.out.println("Size: " + sandwich.getSandwichSize() + ", Bread Type: " + sandwich.getBreadType() +
+                    ", Toasted: " + (sandwich.isToasted() ? "Yes" : "No"));
+
+            double totalPrice = sandwich.calculatePrice();
+            for (int i = 0; i < currentToppings.size(); i++) {
+                Topping topping = currentToppings.get(i);
+                String formattedPrice = topping.getPrice() > 0 ? String.format("$%.2f", topping.getPrice()) : "(Free)";
+                System.out.printf(" %d) %s: %s\n", i + 1, topping, formattedPrice);
+            }
+
+            System.out.printf("\nTotal Sandwich Price: $%.2f\n\n", totalPrice);
+            System.out.print("Enter the number of the topping to remove or 0 to finish: ");
+            choice = cmdscnr.nextInt();
+            cmdscnr.nextLine();
+
+            if (choice == 0) {
+                System.out.println("\nFinished removing toppings.");
+                return;
+            } else if (choice > 0 && choice <= currentToppings.size()) {
+                Topping toppingToRemove = currentToppings.get(choice - 1);
+                sandwich.removeTopping(toppingToRemove);
+            } else {
+                System.out.println("\nOops! That's not a valid choice. Please try again.\n");
+            }
+        } while (true);
+    }
+
+    private void viewCurrentToppings(Sandwich sandwich, boolean allowRemoval) {
+        List<Topping> toppings = sandwich.getCurrentToppings();
+
+        if (toppings.isEmpty()) {
+            System.out.println("\nYour sandwich currently has no toppings.\n");
+            return;
+        }
+
+        System.out.println("\n--- Current Toppings ---");
+        System.out.println("Size: " + sandwich.getSandwichSize() + ", Bread Type: " + sandwich.getBreadType() +
+                ", Toasted: " + (sandwich.isToasted() ? "Yes" : "No"));
+
+        for (Topping topping : toppings) {
+            String formattedPrice = topping.getPrice() > 0 ? String.format("$%.2f", topping.getPrice()) : "(Free)";
+            System.out.printf("      - %s: %s%n", topping, formattedPrice);
+        }
+
+        System.out.printf("\nTotal Sandwich Price: $%.2f\n", sandwich.calculatePrice());
+
+        if (allowRemoval) {
+            System.out.print("\nWould you like to remove a topping? (1 for Yes, 0 for No): ");
+            int choice = cmdscnr.nextInt();
+            cmdscnr.nextLine();
+
+            if (choice == 1) {
+                removeToppings(sandwich);
+            } else {
+                System.out.println("\nNo toppings were removed.");
+            }
+        }
     }
 
     private void selectMeat(SandwichSize size, Sandwich sandwich) {
@@ -566,6 +677,57 @@ public class UserInterface {
         addSideCondimentOption(sandwich);
     }
 
+    private void addSideCondimentOption(Sandwich sandwich) {
+        SideCondimentType[] sideCondiments = SideCondimentType.values();
+        int choice;
+
+        System.out.print("\nWould you like an extra condiment on the side? (1 for Yes, 0 for No): ");
+        int extraChoice = cmdscnr.nextInt();
+        cmdscnr.nextLine();
+        if (extraChoice != 1) return;
+
+        System.out.println("\n--- Side Condiments ---");
+        System.out.println("Select a side condiment:");
+        for (int i = 0; i < sideCondiments.length; i++) {
+            System.out.println(" " + (i + 1) + ") " + sideCondiments[i].toString());
+        }
+        System.out.println(" 0) No more condiments");
+
+        do {
+            System.out.print("\nPlease enter your choice: ");
+            try {
+                choice = cmdscnr.nextInt();
+                cmdscnr.nextLine();
+
+                if (choice == 0) {
+                    break;
+                }
+
+                if (choice > 0 && choice <= sideCondiments.length) {
+                    SideCondimentType selectedSideCondiment = sideCondiments[choice - 1];
+
+                    boolean alreadyExists = sandwich.getCurrentToppings().stream()
+                            .anyMatch(t -> t instanceof Condiments
+                                    && ((Condiments) t).getSideType() == selectedSideCondiment
+                                    && t.isSideCondiment());
+
+                    if (!alreadyExists) {
+                        Condiments sideCondiment = new Condiments(selectedSideCondiment, sandwich.getSandwichSize(), true);
+
+                        sandwich.addTopping(sideCondiment);
+                        System.out.println("\n" + selectedSideCondiment + " added on the side!");
+                    } else {
+                        System.out.println(selectedSideCondiment + " is already added on the side!");
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("\nOops! That's not a valid choice. Please try again.\n");
+                cmdscnr.next();
+            }
+        } while (true);
+    }
+
+    // Helper methods
     private SandwichSize selectSandwichSize() {
         int choice;
 
@@ -653,77 +815,16 @@ public class UserInterface {
     }
 
     private void addUniqueToppings(List<Topping> currentToppings, List<Topping> newToppings) {
-        System.out.println();
         for (Topping newTopping : newToppings) {
-            boolean isSideCondiment = (newTopping instanceof Condiments) && newTopping.isSideCondiment();
-
             boolean alreadyAdded = currentToppings.stream()
                     .anyMatch(t -> t.getName().equalsIgnoreCase(newTopping.getName())
                             && t.isExtra() == newTopping.isExtra()
                             && t.getClass().equals(newTopping.getClass()));
 
-            if (alreadyAdded) {
-                if (!isSideCondiment) {
-                    System.out.println("\nThe topping " + newTopping + " is already on your sandwich!");
-                }
-            } else {
+            if (!alreadyAdded) {
                 currentToppings.add(newTopping);
-
-                if (!isSideCondiment) {
-                    System.out.println(newTopping + " added to your sandwich!");
-                }
             }
         }
-    }
-
-    private void addSideCondimentOption(Sandwich sandwich) {
-        SideCondimentType[] sideCondiments = SideCondimentType.values();
-        int choice;
-
-        System.out.print("\nWould you like an extra condiment on the side? (1 for Yes, 0 for No): ");
-        int extraChoice = cmdscnr.nextInt();
-        cmdscnr.nextLine();
-        if (extraChoice != 1) return;
-
-        System.out.println("\n--- Side Condiments ---");
-        System.out.println("Select a side condiment:");
-        for (int i = 0; i < sideCondiments.length; i++) {
-            System.out.println(" " + (i + 1) + ") " + sideCondiments[i].toString());
-        }
-        System.out.println(" 0) No more condiments");
-
-        do {
-            System.out.print("\nPlease enter your choice: ");
-            try {
-                choice = cmdscnr.nextInt();
-                cmdscnr.nextLine();
-
-                if (choice == 0) {
-                    break;
-                }
-
-                if (choice > 0 && choice <= sideCondiments.length) {
-                    SideCondimentType selectedSideCondiment = sideCondiments[choice - 1];
-
-                    boolean alreadyExists = sandwich.getCurrentToppings().stream()
-                            .anyMatch(t -> t instanceof Condiments
-                                    && ((Condiments) t).getSideType() == selectedSideCondiment
-                                    && t.isSideCondiment());
-
-                    if (!alreadyExists) {
-                        Condiments sideCondiment = new Condiments(selectedSideCondiment, sandwich.getSandwichSize(), true);
-
-                        sandwich.addTopping(sideCondiment);
-                        System.out.println("\n" + selectedSideCondiment + " added on the side!");
-                    } else {
-                        System.out.println(selectedSideCondiment + " is already added on the side!");
-                    }
-                }
-            } catch (Exception e) {
-                System.out.println("\nOops! That's not a valid choice. Please try again.\n");
-                cmdscnr.next();
-            }
-        } while (true);
     }
 
     private <T extends Enum<T>> T getEnumChoice(T[] options, String toppingType) {
@@ -751,125 +852,5 @@ public class UserInterface {
                 cmdscnr.next();
             }
         } while (true);
-    }
-
-    private void modifyToppings(Sandwich sandwich) {
-        int choice;
-
-        System.out.println("\n--- Modify Toppings ---");
-        System.out.println("Let's customize the toppings on your " + sandwich.getName() + "!");
-
-        do {
-            viewCurrentToppings(sandwich, false);
-
-            System.out.println("\nWhat would you like to do?");
-            System.out.println(" 1) Add Toppings");
-            System.out.println(" 2) Remove Toppings");
-            System.out.println(" 0) Done with customization");
-            System.out.print("\nEnter your choice: ");
-
-            try {
-                choice = cmdscnr.nextInt();
-                cmdscnr.nextLine();
-
-                switch (choice) {
-                    case 1 -> {
-                        System.out.println("\n--- Add Toppings ---");
-                        List<Topping> newToppings = selectToppings(sandwich);
-                        System.out.println();
-                        for (Topping topping : newToppings) {
-                            sandwich.addTopping(topping);
-                            System.out.println(topping.getName() + " added!");
-                        }
-                    }
-                    case 2 -> {
-                        System.out.println("\n--- Remove Toppings ---");
-                        removeToppings(sandwich);
-                    }
-                    case 0 -> {
-                        System.out.println("\nAll set! Finished customizing your toppings.");
-                        return;
-                    }
-                    default -> System.out.println("\nOops! That's not a valid choice. Please try again.");
-                }
-            } catch (Exception e) {
-                System.out.println("\nOops! That's not a valid choice. Please try again.");
-                cmdscnr.next();
-            }
-        } while (true);
-    }
-
-    private void removeToppings(Sandwich sandwich) {
-        int choice;
-
-        do {
-            List<Topping> currentToppings = sandwich.getCurrentToppings();
-            if (currentToppings.isEmpty()) {
-                System.out.println("\nYour sandwich currently has no toppings to remove.");
-                return;
-            }
-
-            System.out.println("\n--- Current Toppings ---");
-            System.out.println("Size: " + sandwich.getSandwichSize() + ", Bread Type: " + sandwich.getBreadType() +
-                    ", Toasted: " + (sandwich.isToasted() ? "Yes" : "No"));
-
-            double totalPrice = sandwich.getBasePrice();
-            for (int i = 0; i < currentToppings.size(); i++) {
-                Topping topping = currentToppings.get(i);
-                String formattedPrice = topping.getPrice() > 0 ? String.format("$%.2f", topping.getPrice()) : "(Free)";
-                System.out.printf(" %d) %s: %s\n", i + 1, topping, formattedPrice);
-                totalPrice += topping.getPrice();
-            }
-
-            System.out.printf("\nTotal Sandwich Price: $%.2f\n\n", totalPrice);
-            System.out.print("Enter the number of the topping to remove or 0 to finish: ");
-            choice = cmdscnr.nextInt();
-            cmdscnr.nextLine();
-
-            if (choice == 0) {
-                System.out.println("\nFinished removing toppings.");
-                return;
-            } else if (choice > 0 && choice <= currentToppings.size()) {
-                Topping toppingToRemove = currentToppings.get(choice - 1);
-                sandwich.removeTopping(toppingToRemove);
-            } else {
-                System.out.println("\nOops! That's not a valid choice. Please try again.\n");
-            }
-        } while (true);
-    }
-
-    private void viewCurrentToppings(Sandwich sandwich, boolean allowRemoval) {
-        List<Topping> toppings = sandwich.getCurrentToppings();
-
-        if (toppings.isEmpty()) {
-            System.out.println("\nYour sandwich currently has no toppings.\n");
-            return;
-        }
-
-        System.out.println("\n--- Current Toppings ---");
-        System.out.println("Size: " + sandwich.getSandwichSize() + ", Bread Type: " + sandwich.getBreadType() +
-                ", Toasted: " + (sandwich.isToasted() ? "Yes" : "No"));
-
-        double totalPrice = sandwich.getBasePrice();
-
-        for (Topping topping : toppings) {
-            String formattedPrice = topping.getPrice() > 0 ? String.format("$%.2f", topping.getPrice()) : "(Free)";
-            System.out.printf("      - %s: %s%n", topping, formattedPrice);
-            totalPrice += topping.getPrice();
-        }
-
-        System.out.printf("\nTotal Sandwich Price: $%.2f\n", totalPrice);
-
-        if (allowRemoval) {
-            System.out.print("\nWould you like to remove a topping? (1 for Yes, 0 for No): ");
-            int choice = cmdscnr.nextInt();
-            cmdscnr.nextLine();
-
-            if (choice == 1) {
-                removeToppings(sandwich);
-            } else {
-                System.out.println("\nNo toppings were removed.");
-            }
-        }
     }
 }
