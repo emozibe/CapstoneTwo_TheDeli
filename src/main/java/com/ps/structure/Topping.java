@@ -18,6 +18,12 @@ public abstract class Topping {
 
     public abstract Topping clone();
 
+    public abstract String toString();
+
+    public boolean isSideCondiment() {
+        return false;
+    }
+
     public String getName() {
         return name;
     } public void setName(String name) {

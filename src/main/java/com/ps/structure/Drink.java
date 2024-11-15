@@ -24,7 +24,7 @@ public class Drink implements Product {
 
     @Override
     public String toString() {
-        return size + " " + type + " - $" + price;
+        return String.format("%s (%s): $%.2f", type.toString(), size, price);
     }
 
     public DrinkSize getSize() {

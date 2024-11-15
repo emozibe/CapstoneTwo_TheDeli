@@ -13,7 +13,7 @@ public class Chips implements Product {
 
     @Override
     public String toString() {
-        return flavor + " Chips - $" + price;
+        return String.format("%s: $%.2f", flavor, price);
     }
 
     public Chips(ChipFlavor flavor) {

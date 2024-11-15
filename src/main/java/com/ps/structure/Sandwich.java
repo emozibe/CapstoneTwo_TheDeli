@@ -31,6 +31,21 @@ public abstract class Sandwich implements Product {
 
     public abstract Sandwich clone();
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name).append(" - ")
+                .append("Size: ").append(getSandwichSize())
+                .append(", Bread: ").append(getBreadType())
+                .append(", Toasted: ").append(isToasted() ? "Yes" : "No")
+                .append(", Toppings: ");
+        for (Topping topping : getCurrentToppings()) {
+            sb.append("\n    - ").append(topping);
+        }
+        sb.append("\n  Sandwich Total: $").append(String.format("%.2f", calculatePrice()));
+        return sb.toString();
+    }
+
     public void addTopping(Topping topping) {
         if (!currentToppings.contains(topping)) {
             currentToppings.add(topping);
@@ -50,10 +65,21 @@ public abstract class Sandwich implements Product {
 
             addedToppings.remove(topping);
 
-            System.out.println(topping.getName() + " has been removed from your sandwich.");
         } else {
-            System.out.println("The topping " + topping.getName() + " is not on your sandwich.");
+            System.out.println("The topping " + topping.getName() + " is not on your sandwich!");
         }
+    }
+
+    public double calculatePrice() {
+        double totalPrice = getBasePrice();
+
+        for (Topping topping : currentToppings) {
+            if (isChargeableTopping(topping)) {
+                totalPrice += topping.getPrice();
+            }
+        }
+
+        return Math.round(totalPrice * 100.0) / 100.0;
     }
 
     public double getBasePrice() {
@@ -62,6 +88,10 @@ public abstract class Sandwich implements Product {
             case MEDIUM -> 7.00;
             case LARGE -> 8.50;
         };
+    }
+
+    private boolean isChargeableTopping(Topping topping) {
+        return topping instanceof Meat || topping instanceof Cheese;
     }
 
     public SandwichSize getSandwichSize() {
@@ -90,5 +120,9 @@ public abstract class Sandwich implements Product {
         return name;
     } public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isCustom() {
+        return this instanceof CustomSandwich;
     }
 }

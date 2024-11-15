@@ -29,9 +29,15 @@ public class Condiments extends Topping {
     }
 
     @Override
-    public String toString() {
-        return type.toString() + (onSide ? " (On the Side)" : "");
+    public boolean isSideCondiment() {
+        return onSide;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s%s", type.toString(), isSideCondiment() ? " (On the Side)" : "");
+    }
+
 
     public CondimentType getType() {
         return type;

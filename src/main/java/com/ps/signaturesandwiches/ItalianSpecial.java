@@ -26,11 +26,6 @@ public class ItalianSpecial extends Sandwich {
     }
 
     @Override
-    public double calculatePrice() {
-        return 0.0;
-    }
-
-    @Override
     public Sandwich clone() {
         ItalianSpecial clonedSandwich = new ItalianSpecial(this.sandwichSize, this.breadType, this.isToasted);
 

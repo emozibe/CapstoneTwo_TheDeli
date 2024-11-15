@@ -11,21 +11,6 @@ public class CustomSandwich extends Sandwich {
     }
 
     @Override
-    public double calculatePrice() {
-        double basePrice = switch (sandwichSize) {
-            case SMALL -> 4.99;
-            case MEDIUM -> 6.99;
-            case LARGE -> 8.99;
-        };
-
-        for (Topping topping : currentToppings) {
-            basePrice += topping.getPrice();
-        }
-
-        return basePrice;
-    }
-
-    @Override
     public String getDescription() {
         StringBuilder description = new StringBuilder();
         description.append("Custom Sandwich with ").append(breadType).append(" bread, ")

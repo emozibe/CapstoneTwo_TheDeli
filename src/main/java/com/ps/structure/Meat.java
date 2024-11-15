@@ -43,7 +43,6 @@ public class Meat extends Topping {
         return type.toString() + (extraMeat ? " (Extra)" : "");
     }
 
-
     public MeatType getType() {
         return type;
     }

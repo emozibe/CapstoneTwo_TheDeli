@@ -23,11 +23,6 @@ public class BLT extends Sandwich {
     }
 
     @Override
-    public double calculatePrice() {
-        return 0.0;
-    }
-
-    @Override
     public Sandwich clone() {
         BLT clonedSandwich = new BLT(this.sandwichSize, this.breadType, this.isToasted);
 
