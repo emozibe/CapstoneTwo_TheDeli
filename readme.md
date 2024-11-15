@@ -121,23 +121,32 @@ This project leverages a variety of advanced programming concepts, including:
 
 Below are some screenshots of the application in action:
 
-1. **Main Menu**: Main menu where users start a new order or exit, showing clear navigation options.
-   ![Main Menu](assets/MainMenu.png)
-2. **Order Menu**: Order menu where users add sandwiches, drinks, or chips, view items, and checkout, illustrating the different steps in the ordering process.
-   ![Order Menu](assets/OrderMenu.png)
-3. **Checkout Menu**: Checkout menu where users finalize their order, view a summary, and confirm payment, ensuring they review all items before completing the purchase. Order menu where users add sandwiches, drinks, or chips, view items, and checkout, illustrating the different steps in the ordering process.
-   ![Checkout Menu](assets/CheckoutMenu.png)
-4. **Receipt**: Screenshot of the generated receipt, providing an overview of the ordered items, their prices, and the final total cost.
-   ![Receipt](assets/Receipt.png)
+**Main Menu**: Main menu where users start a new order or exit, showing clear navigation options.
+   
+![Main Menu](assets/MainMenu.png)
+
+**Order Menu**: Order menu where users add sandwiches, drinks, or chips, view items, and checkout, illustrating the different steps in the ordering process.
+   
+![Order Menu](assets/OrderMenu.png)
+
+**Checkout Menu**: Checkout menu where users finalize their order, view a summary, and confirm payment, ensuring they review all items before completing the purchase. Order menu where users add sandwiches, drinks, or chips, view items, and checkout, illustrating the different steps in the ordering process.
+   
+![Checkout Menu](assets/CheckoutMenu.png)
+
+**Receipt**: Screenshot of the generated receipt, providing an overview of the ordered items, their prices, and the final total cost.
+   
+![Receipt](assets/Receipt.png)
 
 ### GIF of the Application in Action
 
 **Application Demo GIF**: A brief demonstration of adding a sandwich with customizations to an order, showing the step-by-step process of selecting bread type, toppings, and other customizations.
+
 ![Application Demo](assets/ApplicationDemo.gif)
 
 ### Class Relationship Diagram
 
 **Diagram**: A visual representation of the relationship between the main classes. This will help illustrate how each part of the system interacts and supports modular design.
+
 ![Diagram](assets/Diagram.png)
 
 All related files, including screenshots and diagrams, are available in the assets folder for easy reference.
